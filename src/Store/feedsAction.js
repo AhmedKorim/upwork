@@ -2,6 +2,24 @@ import RSSParser from 'rss-parser';
 import {ADD_NEW_FEED} from "./ActionType";
 
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+export const getFeed = (url) => {
+    return (dispatch, getState) => {
+        const stateFeeds = getState().feedsData;
+        const parser = new RSSParser({});
+        parser.parseURL(CORS_PROXY + url, (err, feed) => {
+            if (err) {
+                // dispatch() error
+            } else {
+                const isFeedExitsts = stateFeeds.feeds.find(({title}) => title === feed.title);
+                if (!!isFeedExitsts) {
+                    // feed is already added check updates
+                } else {
+                    dispatch({type: ADD_NEW_FEED, payload: {feed}})
+                }
+            }
+        })
+    }
+}
 export const addFeed = (url) => {
     return (dispatch, getState) => {
         const stateFeeds = getState().feedsData;
@@ -12,11 +30,15 @@ export const addFeed = (url) => {
             } else {
                 const isFeedExitsts = stateFeeds.feeds.find(({title}) => title === feed.title);
                 if (!!isFeedExitsts) {
-                    // feed is already added
+                    // feed is already added alert
                 } else {
                     dispatch({type: ADD_NEW_FEED, payload: {feed}})
                 }
             }
+
         })
+
     }
+
 }
+

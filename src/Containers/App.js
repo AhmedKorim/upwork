@@ -6,9 +6,11 @@ import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import Typography from "@material-ui/core/Typography/Typography";
 import React, {Component, Fragment} from 'react';
-import './App.scss';
 import {connect} from "react-redux";
-import {addFeed} from "../Store/feedsAction";
+import EnhancedTabs from "../Componenents/UI/EnhancedTabs/EnhancedTabs";
+import {getFeed} from "../Store/feedsAction";
+import DrawerCom from '../Componenents/Layout/Drawer/Drawer';
+import './App.scss';
 
 class App extends Component {
     componentDidMount() {
@@ -29,13 +31,30 @@ class App extends Component {
                         </Toolbar>
                     </AppBar>
                 </RootRef>
-                <main style={{height: `calc(100vh - ${this.headerHeight ? this.headerHeight : 120}px)`}}>
-                </main>
+                <div style={{height: `calc(100vh - ${this.headerHeight ? this.headerHeight : 120}px)`}}>
+                    <aside>
+                        <DrawerCom/>
+                    </aside>
+                    <main>
+                        <div>
+                            <EnhancedTabs
+                                disableRouting
+                                paddges={[{label: 'all jobs', count: 5, icon: 'compared'},
+                                    {label: 'all unread', count: 6, icon: 'favourite'},
+                                ]}
+                            >
+                                <div>all</div>
+                                <div>read</div>
+                            </EnhancedTabs>
+                        </div>
+                    </main>
+                </div>
                 <div className="FloatActionButtonWrapper">
                     <Tooltip title="add new job feed">
                         <Button variant="fab" color="primary" onClick={void 0} className="newReviewFap"><Icon>add</Icon></Button>
                     </Tooltip>
                 </div>
+                <RDialog/>
             </Fragment>
         );
     }
@@ -43,7 +62,7 @@ class App extends Component {
 
 const mapDispatchToProps = dispatch => {
     return ({
-        getFeed: (url) => dispatch(addFeed(url))
-    })
-}
+        getFeed: (url) => dispatch(getFeed(url))
+    });
+};
 export default connect(null, mapDispatchToProps)(App);
