@@ -30,7 +30,7 @@ export const addFeed = (url) => {
                 const isFeedExitsts = stateFeeds.feeds.find(({link}) => link === url);
                 if (!!isFeedExitsts) {
                     // feed is already added alert
-                    alert()
+                    // alert()
                 } else {
 
                     dispatch({type: ADD_NEW_FEED, payload: {feed}});

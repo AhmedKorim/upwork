@@ -3,9 +3,7 @@ import Chip from "@material-ui/core/Chip/Chip";
 import Collapse from "@material-ui/core/Collapse/Collapse";
 import Fade from "@material-ui/core/Fade/Fade";
 import Grid from "@material-ui/core/Grid/Grid";
-import Grow from "@material-ui/core/Grow/Grow";
 import Paper from "@material-ui/core/Paper/Paper";
-import Slide from "@material-ui/core/Slide/Slide";
 import Typography from "@material-ui/core/Typography/Typography";
 import React, {Component} from 'react'
 

@@ -3,7 +3,8 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Provider from "react-redux/src/components/Provider";
-import BrowserRouter from "react-router-dom/es/BrowserRouter";
+import {BrowserRouter} from "react-router-dom";
+
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from "redux-thunk";
 import App from './Containers/App';
@@ -21,7 +22,11 @@ const store = createStore(
     }),
     composeEnhancers(applyMiddleware(thunk))
 );
-const theme = createMuiTheme({});
+const theme = createMuiTheme({
+    palette: {
+        // type: "dark"
+    }
+});
 
 ReactDOM.render(
     <Provider store={store}>
