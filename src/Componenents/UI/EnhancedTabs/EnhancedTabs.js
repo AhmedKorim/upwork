@@ -20,7 +20,7 @@ const styles = theme => ({
     },
     fullWidthTabs: {
         width: '100%',
-        display:"flex",
+        display: "flex",
         justifyContent: "center"
     },
     padding: {
@@ -49,6 +49,7 @@ class EnhancedTabs extends React.Component {
 
     handleChange = (event, value) => {
         this.setState({value});
+        this.props.cast && this.props.cast(value);
         if (this.props.disableRouting) return;
         this.props.history.push((this.props.match.url !== "/" ? this.props.match.url : this.props.location.pathname) + '/' + this.props.tab[value].label);
     };
@@ -107,11 +108,11 @@ class EnhancedTabs extends React.Component {
                         onChange={handleChange}
                         indicatorColor="primary"
                         textColor="primary"
-                        scrollable={noscroll ? false : width === 'xs' }
+                        scrollable={noscroll ? false : width === 'xs'}
                         scrollButtons={(width === 'xs') ? 'on' : 'off'}
                         classes={{
                             scrollButtons: 'scrollingButton',
-                            root: [classes.fullWidthTabs,rootClass].join(' '),
+                            root: [classes.fullWidthTabs, rootClass].join(' '),
                             indicator: indercatorClass
                         }}
                     >

@@ -2,9 +2,16 @@
   text-transform: capitalize;
   text-align: center;
   font-weight: bold;
-  font-size: 1.8rem!important;
+  font-size: 1.8rem !important;
   width: 100%;
   color: #fff !important;
+}
+
+.openAllFeeds {
+  position: fixed !important;
+  z-index: 55 !important;
+  right: 3rem;
+  bottom: 10rem;
 }
 
 .FloatActionButtonWrapper {

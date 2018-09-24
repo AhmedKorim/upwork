@@ -59,13 +59,10 @@ const styles = theme => ({
 
 
 const DrawerCom = props => {
-    const showFeed = (id) => {
-        console.log(id);
-    }
 
+    const {classes, showFeed} = props;
+    const feeds = JSON.parse(localStorage.getItem('feeds')) || [];
 
-    const {classes} = props;
-    const feeds = props.feeds.map(feed => ({link: feed.link, title: feed.title}));
     return (
         <Drawer
             variant="permanent"
@@ -79,9 +76,12 @@ const DrawerCom = props => {
                 </Typography></div>
             <Divider/>
             <List component="ul">
-                {feeds.map(feed => <ListItem key={feed.title} button onClick={() => showFeed(feed.link)} component="li">
-                    {feed.title}
-                </ListItem>)}
+                {feeds.map((feed, index, {length}) => <div>
+                    <ListItem key={feed.title} button onClick={() => showFeed(index)} component="li">
+                        {feed.title}
+                    </ListItem>
+                    {(index > 1 && index < length) && <Divider/>}
+                </div>)}
             </List>
         </Drawer>
     )

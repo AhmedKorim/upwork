@@ -10,12 +10,14 @@ import App from './Containers/App';
 import './index.scss';
 import registerServiceWorker from './registerServiceWorker';
 import feedReducer from "./Store/feedReducer";
+import UIreducer from "./Store/UIreducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
     combineReducers({
-        feedsData: feedReducer
+        feedsData: feedReducer,
+        UI: UIreducer
     }),
     composeEnhancers(applyMiddleware(thunk))
 );
