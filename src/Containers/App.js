@@ -19,19 +19,32 @@ import './App.scss';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 class App extends Component {
-    state = {
-        slide: 0,
-        FeedIndex: 0
+    constructor(props) {
+        super(props);
+        console.log(props.feeds);
+        this.state = {
+            slide: 0,
+            activeFeed: props.feeds.length > 0 ? props.feeds[0].title : null
+        }
     }
-    showFeed = FeedIndex => {
-        this.setState({FeedIndex})
+
+    showFeed = activeFeed => {
+        this.setState({activeFeed})
+    }
+
+    componentWillUpdate(nextProps) {
+        if ((nextProps.feeds.length !== this.props.feeds.length) && !this.state.activeFeed) {
+            this.setState({activeFeed: nextProps.feeds[0].title})
+        }
+
     }
 
     componentDidMount() {
         const feeds = localStorage.getItem('feeds');
         if (feeds) {
             const feedJson = JSON.parse(feeds);
-                this.props.getFeed(feedJson);
+            console.log(feedJson);
+            feedJson.forEach((feed) => this.props.getFeed(feed.link))
 
         }
         if (!this.header) return;
@@ -50,6 +63,7 @@ class App extends Component {
 
 
     render() {
+        const activeFeed = this.props.feeds.find(feed => feed.title === this.state.activeFeed);
         return (
             <Fragment>
                 <RootRef rootRef={(node) => this.header = node}>
@@ -78,7 +92,7 @@ class App extends Component {
                                 <PerfectScrollbar>
                                     <div style={{height: '80vh'}}>
                                         <Grid justify="center" container alignItems="center">
-                                            {(this.props.feeds.length > 0) && this.props.feeds[this.state.FeedIndex].items.map(feed => <Grid item xs={11}>
+                                            {activeFeed && activeFeed.items.map(feed => <Grid item xs={11}>
                                                 <FeedItem {...feed}/>
                                             </Grid>)}
                                         </Grid>

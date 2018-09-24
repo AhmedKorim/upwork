@@ -77,7 +77,7 @@ const DrawerCom = props => {
             <Divider/>
             <List component="ul">
                 {feeds.map((feed, index, {length}) => <div>
-                    <ListItem key={feed.title} button onClick={() => showFeed(index)} component="li">
+                    <ListItem key={feed.title} button onClick={() => showFeed(feed.title)} component="li">
                         {feed.title}
                     </ListItem>
                     {(index > 1 && index < length) && <Divider/>}
