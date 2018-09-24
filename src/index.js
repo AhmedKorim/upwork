@@ -2,7 +2,7 @@ import {createMuiTheme} from "@material-ui/core";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Provider from "react-redux/src/components/Provider";
+import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
 
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";

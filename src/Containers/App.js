@@ -38,15 +38,20 @@ class App extends Component {
     }
 
     componentDidMount() {
-        const feeds = localStorage.getItem('feeds');
-        if (feeds) {
-            const feedJson = JSON.parse(feeds);
-            console.log(feedJson);
-            feedJson.forEach((feed) => {
-                this.props.getFeed(feed.link)
-            })
+        let feeds = localStorage.getItem('feeds');
 
+        if (!feeds) {
+            localStorage.setItem('feeds', JSON.stringify([{
+                link: "https://www.upwork.com/ab/feed/topics/rss?securityToken=11503c7214e9ef98508b7c6f541e6a47dccb65710b611d2aabada454ef5afcf2d06bc9ace12aba5b24f886283f8eced3642e6ba04f13758f9b6acadb56b4ccef&userUid=941272037999767552&orgUid=941272038024933377&topic=3887663",
+                title: "all psd to html jobs | upwork.com"
+            }]));
         }
+        feeds = localStorage.getItem('feeds');
+        const feedJson = JSON.parse(feeds);
+        console.log(feedJson);
+        feedJson.forEach((feed) => {
+            this.props.getFeed(feed.link)
+        })
         if (!this.header) return;
         this.headerHeight = window.getComputedStyle(this.header).height;
     }
@@ -88,6 +93,9 @@ class App extends Component {
                                             <FeedItem {...feed}/>
                                         </Grid>)}
                                     </Grid>
+                                    {this.props.feeds.length < 1 && <Typography variant="subheading" color="h2">
+                                        click the + button and add feeds
+                                    </Typography>}
                                 </div>
                             </PerfectScrollbar>
                             {/* <EnhancedTabs
