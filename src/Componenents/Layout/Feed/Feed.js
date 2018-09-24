@@ -1,13 +1,18 @@
 import {withStyles} from "@material-ui/core";
 import Chip from "@material-ui/core/Chip/Chip";
+import Collapse from "@material-ui/core/Collapse/Collapse";
+import Fade from "@material-ui/core/Fade/Fade";
 import Grid from "@material-ui/core/Grid/Grid";
+import Grow from "@material-ui/core/Grow/Grow";
 import Paper from "@material-ui/core/Paper/Paper";
+import Slide from "@material-ui/core/Slide/Slide";
 import Typography from "@material-ui/core/Typography/Typography";
 import React, {Component} from 'react'
 
 const styles = theme => ({
     paper: {
-        margin: ".6rem",
+        cursor: 'pointer',
+        margin: ".3rem",
         padding: '1rem',
         borderRadius: '0 !important'
     },
@@ -27,9 +32,17 @@ const styles = theme => ({
 })
 
 class FeedItem extends Component {
+    state = {
+        extended: false
+    }
 
     goto = (link) => {
         window.open(link);
+    }
+    extend = (extended) => {
+        if (this.state.extended === extended) return;
+        this.setState({extended})
+
     }
 
 
@@ -41,6 +54,7 @@ class FeedItem extends Component {
             pubDate,
             content,
         } = this.props;
+
         const budgetText = content.split('<b>Budget</b>:')[1];
         const countryText = content.split('<b>Country</b>:')[1];
         const SkillsText = content.split('<b>Skills</b>:')[1];
@@ -53,7 +67,8 @@ class FeedItem extends Component {
         const dateAgo = ((new Date().getTime() - _pubdate.getTime()) / (60 * 1000)) - 60 - _pubdate.getTimezoneOffset();
         const DateToPrint = dateAgo > 120 ? `${(dateAgo / 60).toFixed(2)} H ago` : `${dateAgo.toFixed(0)}Min ago`;
         return (
-            <Paper onClick={() => this.goto(link)} className={classes.paper}>
+
+            <Paper onClick={() => this.goto(link)} className={classes.paper} onMouseOver={() => this.extend(true)} onMouseLeave={() => this.extend(false)}>
                 <Grid container>
                     <Grid item container justify="space-between">
                         <Grid item xs={10}><Typography variant="subheading" component="h3" className={classes.title}>{title}</Typography></Grid>
@@ -65,6 +80,13 @@ class FeedItem extends Component {
                                     <Chip className={classes.skillChip} key={skill} label={skill} color="primary"/>
                                 </Grid>)}
                             </Grid>
+                            <Collapse timeout={200} in={this.state.extended} mountOnEnter unmountOnExit>
+                                <Fade style={{transitionDelay: this.state.extended ? 150 : 0}} timeout={350} in={this.state.extended} mountOnEnter>
+                                    <Typography variant="body1" component="article">
+                                        <div dangerouslySetInnerHTML={{__html: content}}/>
+                                    </Typography>
+                                </Fade>
+                            </Collapse>
                         </Typography></Grid>
                     </Grid>
                 </Grid>

@@ -44,7 +44,9 @@ class App extends Component {
         if (feeds) {
             const feedJson = JSON.parse(feeds);
             console.log(feedJson);
-            feedJson.forEach((feed) => this.props.getFeed(feed.link))
+            feedJson.forEach((feed) => {
+                this.props.getFeed(feed.link)
+            })
 
         }
         if (!this.header) return;
@@ -63,7 +65,8 @@ class App extends Component {
 
 
     render() {
-        const activeFeed = this.props.feeds.find(feed => feed.title === this.state.activeFeed);
+        const activeFeed = this.props
+            .feeds.find(feed => { return feed.title === this.state.activeFeed;});
         return (
             <Fragment>
                 <RootRef rootRef={(node) => this.header = node}>
@@ -108,7 +111,7 @@ class App extends Component {
                         <Button variant="fab" color="primary" onClick={this.props.openDialog} className="newReviewFap"><Icon>add</Icon></Button>
                     </Tooltip>
                 </div>
-                <Grow in={this.state.slide == 0} unMountOnExit mountOnEnter
+                <Grow in={this.state.slide == 0} unmountOnExit mountOnEnter
                       timeout={500}>
                     <Button onClick={this.openAll} className="openAllFeeds" color="secondary" variant="raised">OPEN ALL
                         unread</Button>
